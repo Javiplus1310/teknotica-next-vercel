@@ -10,7 +10,7 @@ export default function Hero() {
     return (
         <section
             id="hero"
-            className="relative flex flex-col items-center justify-center text-center py-40 px-6 bg-gradient-to-b from-gray-900 to-black"
+            className="relative flex flex-col items-center justify-center text-center py-40 px-6 bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-black"
         >
             <motion.h1
                 initial={{ opacity: 0, y: -30 }}
@@ -25,7 +25,7 @@ export default function Hero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="max-w-2xl text-lg text-gray-300 mb-4"
+                className="max-w-2xl text-lg text-gray-700 dark:text-gray-300 light:text-gray-700 mb-4"
             >
                 Armado de PC personalizadas, confiables y a tu medida. Ya sea para trabajar, estudiar o jugar, diseñamos tu setup ideal.
             </motion.p>
@@ -66,7 +66,7 @@ export default function Hero() {
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4"
+                    className="fixed inset-0 bg-white/95 dark:bg-black/90 flex items-center justify-center z-50 p-4"
                     onClick={() => setSelectedImage(null)}
                 >
                     <motion.div
@@ -85,7 +85,7 @@ export default function Hero() {
                         
                         <button
                             onClick={() => setSelectedImage(null)}
-                            className="absolute top-4 right-6 text-white text-3xl hover:text-indigo-400 transition"
+                            className="absolute top-4 right-6 text-gray-900 dark:text-white text-3xl hover:text-indigo-400 transition"
                         >
                             ✕
                         </button>
