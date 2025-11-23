@@ -38,14 +38,14 @@ export default function FAQ() {
   }
 
   return (
-    <section id="faq" className="py-24 px-6 bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400">
+    <section id="faq" className="py-24 px-6 bg-gray-950 border-t border-gray-800 text-gray-400">
       <div className="max-w-4xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-12"
+          className="text-3xl md:text-4xl font-bold text-center text-white mb-12"
         >
           Preguntas Frecuentes
         </motion.h2>
@@ -58,19 +58,19 @@ export default function FAQ() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
               viewport={{ once: true }}
-              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-transparent rounded-lg overflow-hidden"
+              className="bg-gray-800 rounded-lg overflow-hidden"
             >
               <button
                 onClick={() => toggleFAQ(index)}
                 className="w-full flex justify-between items-center p-6 text-left hover:bg-gray-700 transition"
               >
-                <span className="text-lg font-semibold text-gray-900 dark:text-white pr-4">
+                <span className="text-lg font-semibold text-white pr-4">
                   {faq.question}
                 </span>
                 {openIndex === index ? (
                   <ChevronUp className="text-indigo-400 flex-shrink-0" size={24} />
                 ) : (
-                  <ChevronDown className="text-gray-600 dark:text-gray-400 flex-shrink-0" size={24} />
+                  <ChevronDown className="text-gray-400 flex-shrink-0" size={24} />
                 )}
               </button>
 
@@ -83,7 +83,7 @@ export default function FAQ() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-6 pt-6 pb-6 text-gray-700 dark:text-gray-300">
+                    <div className="px-6 pt-6 pb-6 text-gray-300">
                       {faq.answer}
                     </div>
                   </motion.div>

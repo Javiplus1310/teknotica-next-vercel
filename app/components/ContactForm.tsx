@@ -1,38 +1,37 @@
 'use client'
-
 import { useState } from 'react'
 
 export default function ContactForm() {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' })
     const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
-
+    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
         setFormData({ ...formData, [e.target.name]: e.target.value })
-
+    
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setStatus('sending')
         try {
-        const res = await fetch('/api/send', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        })
-        if (res.ok) {
-            setStatus('sent')
-            setFormData({ name: '', email: '', message: '' })
-        } else throw new Error()
+            const res = await fetch('/api/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            if (res.ok) {
+                setStatus('sent')
+                setFormData({ name: '', email: '', message: '' })
+            } else throw new Error()
         } catch {
             setStatus('error')
         }
     }
-
+    
     return (
         <form
-        onSubmit={handleSubmit}
-        className="max-w-md mx-auto p-8 bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 to-black rounded-2xl shadow-lg space-y-4"
+            onSubmit={handleSubmit}
+            className="max-w-md mx-auto p-8 bg-gray-900 rounded-2xl shadow-lg space-y-4"
         >
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white text-center">Contáctame</h2>
+            <h2 className="text-2xl font-semibold text-white text-center">Contáctame</h2>
             <input
                 type="text"
                 name="name"
@@ -42,7 +41,6 @@ export default function ContactForm() {
                 required
                 className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-indigo-500"
             />
-
             <input
                 type="email"
                 name="email"
@@ -52,7 +50,6 @@ export default function ContactForm() {
                 required
                 className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-indigo-500"
             />
-
             <textarea
                 name="message"
                 placeholder="Tu mensaje"
@@ -62,7 +59,6 @@ export default function ContactForm() {
                 required
                 className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-indigo-500"
             />
-
             <button
                 type="submit"
                 disabled={status === 'sending'}

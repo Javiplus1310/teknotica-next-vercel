@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import Image from "next/image"
 import NextLink from 'next/link'
-import { label } from 'framer-motion/client'
 import { usePathname } from 'next/navigation'
 
 export default function Nav() {
@@ -39,7 +38,7 @@ export default function Nav() {
     return (
         <header
             className={`fixed top-0 w-full z-50 transition-all ${
-                scrolled ? 'bg-white/90 dark:bg-gray-950/90 backdrop-blur border-b border-gray-200 dark:border-gray-800' : 'bg-transparent'
+                scrolled ? 'bg-gray-950/90 backdrop-blur border-b border-gray-800' : 'bg-transparent'
             }`}
         >
             <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
@@ -51,13 +50,12 @@ export default function Nav() {
                         height={64}
                         className="cursor-pointer"
                     />
-
-                    <span className="text-xl font-bold text-gray-900 dark:text-white hidden lg:block">
+                    <span className="text-xl font-bold text-white hidden lg:block">
                         Teknotica
                     </span>
                 </NextLink>
                 
-                <nav className="hidden md:flex space-x-8 text-gray-700 dark:text-gray-300">
+                <nav className="hidden md:flex space-x-8 text-gray-300">
                     {navItems.map((item) => (
                         item.label === 'Servicios' ? (
                             <div
@@ -127,7 +125,7 @@ export default function Nav() {
                 <div className="flex items-center gap-3">
                     <button
                         onClick={() => setMenuOpen(!menuOpen)}
-                        className="md:hidden text-gray-300 dark:text-gray-300 light:text-gray-900"
+                        className="md:hidden text-gray-300"
                     >
                         {menuOpen ? <X size={26} /> : <Menu size={26} />}
                     </button>
