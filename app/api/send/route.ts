@@ -8,7 +8,7 @@ export async function POST(req: Request) {
 
     try {
         await resend.emails.send({
-            from: 'Teknotica <teknotica.contacto@gmail.com>',
+            from: 'Teknotica <contacto@tecnotica.cl>',
             to: 'teknotica.contacto@gmail.com',
             subject: `Nuevo mensaje de ${name}`,
             html: `
