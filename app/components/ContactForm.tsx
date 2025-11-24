@@ -43,7 +43,7 @@ function ContactFormContent() {
             if (res.ok) {
                 setStatus('sent')
                 setFormData({ name: '', email: '', message: '' })
-                setCooldown(60)
+                setCooldown(30)
                 setTimeout(() => setStatus('idle'), 5000)
             } else {
                 throw new Error()
