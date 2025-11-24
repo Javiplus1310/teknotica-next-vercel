@@ -109,7 +109,7 @@ function ContactFormContent() {
 
 export default function ContactForm() {
     return (
-        <GoogleReCaptchaProvider reCaptchaKey="6Le1TxYsAAAAAB9bJMPfd0EocDfYAueUsAGfVIfA">
+        <GoogleReCaptchaProvider reCaptchaKey="6Le1TxYsAAAAAPQ-almNolX1e71Kldr4yPNwVUhT">
             <ContactFormContent />
         </GoogleReCaptchaProvider>
     )
