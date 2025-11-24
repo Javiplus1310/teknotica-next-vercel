@@ -14,9 +14,7 @@ export default function Nav() {
     const isHome = pathname === '/'
     
     useEffect(() => {
-        // Verificar scroll inicial inmediatamente
         setScrolled(window.scrollY > 30)
-        
         const handleScroll = () => setScrolled(window.scrollY > 30)
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)

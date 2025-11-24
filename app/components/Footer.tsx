@@ -8,7 +8,7 @@ export default function Footer() {
         <footer className="bg-gray-950 border-t border-gray-800 text-gray-400 py-12">
             <div className="max-w-6xl mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                    {/* Columna 1: Sobre Teknotica */}
+
                     <div>
                         <h3 className="text-white text-lg font-semibold mb-4">Teknotica</h3>
                         <p className="text-sm text-gray-500">
@@ -17,7 +17,6 @@ export default function Footer() {
                         </p>
                     </div>
                     
-                    {/* Columna 2: Enlaces rápidos */}
                     <div>
                         <h3 className="text-white text-lg font-semibold mb-4">Servicios</h3>
                         <ul className="space-y-2 text-sm">
@@ -39,7 +38,6 @@ export default function Footer() {
                         </ul>
                     </div>
                     
-                    {/* Columna 3: Contacto */}
                     <div>
                         <h3 className="text-white text-lg font-semibold mb-4">Contacto</h3>
                         <ul className="space-y-3 text-sm">
@@ -59,7 +57,6 @@ export default function Footer() {
                     </div>
                 </div>
                 
-                {/* Línea divisoria */}
                 <div className="border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
                     <p>© {currentYear} Teknotica — Armado de PCs profesionales. Todos los derechos reservados.</p>
                 </div>

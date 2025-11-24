@@ -1,26 +1,44 @@
 'use client'
 import { useState } from 'react'
+import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 
-export default function ContactForm() {
+function ContactFormContent() {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' })
     const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+    const { executeRecaptcha } = useGoogleReCaptcha()
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
         setFormData({ ...formData, [e.target.name]: e.target.value })
     
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        
+        if (!executeRecaptcha) {
+            console.log('reCAPTCHA no está listo')
+            return
+        }
+        
         setStatus('sending')
+        
         try {
+            // Obtener token de reCAPTCHA
+            const token = await executeRecaptcha('contact_form')
+            
             const res = await fetch('/api/send', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({
+                    ...formData,
+                    recaptchaToken: token  // Enviar token
+                })
             })
+            
             if (res.ok) {
                 setStatus('sent')
                 setFormData({ name: '', email: '', message: '' })
-            } else throw new Error()
+            } else {
+                throw new Error()
+            }
         } catch {
             setStatus('error')
         }
@@ -62,7 +80,7 @@ export default function ContactForm() {
             <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg transition"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg transition disabled:opacity-50"
             >
                 {status === 'sending' ? 'Enviando...' : 'Enviar mensaje'}
             </button>
@@ -73,6 +91,26 @@ export default function ContactForm() {
             {status === 'error' && (
                 <p className="text-red-400 text-center">❌ Error al enviar. Intenta de nuevo.</p>
             )}
+            
+            <p className="text-xs text-gray-500 text-center">
+                Este sitio está protegido por reCAPTCHA y se aplican las{' '}
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" className="underline">
+                    Políticas de Privacidad
+                </a>{' '}
+                y{' '}
+                <a href="https://policies.google.com/terms" target="_blank" rel="noopener" className="underline">
+                    Términos de Servicio
+                </a>{' '}
+                de Google.
+            </p>
         </form>
+    )
+}
+
+export default function ContactForm() {
+    return (
+        <GoogleReCaptchaProvider reCaptchaKey="6Le1TxYsAAAAAB9bJMPfd0EocDfYAueUsAGfVIfA">
+            <ContactFormContent />
+        </GoogleReCaptchaProvider>
     )
 }
