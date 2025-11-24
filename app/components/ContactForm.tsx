@@ -1,11 +1,19 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 
 function ContactFormContent() {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' })
     const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+    const [cooldown, setCooldown] = useState(0) 
     const { executeRecaptcha } = useGoogleReCaptcha()
+    
+    useEffect(() => {
+        if (cooldown > 0) {
+            const timer = setTimeout(() => setCooldown(cooldown - 1), 1000)
+            return () => clearTimeout(timer)
+        }
+    }, [cooldown])
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -21,7 +29,6 @@ function ContactFormContent() {
         setStatus('sending')
         
         try {
-            // Obtener token de reCAPTCHA
             const token = await executeRecaptcha('contact_form')
             
             const res = await fetch('/api/send', {
@@ -29,13 +36,15 @@ function ContactFormContent() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...formData,
-                    recaptchaToken: token  // Enviar token
+                    recaptchaToken: token
                 })
             })
             
             if (res.ok) {
                 setStatus('sent')
                 setFormData({ name: '', email: '', message: '' })
+                setCooldown(60)
+                setTimeout(() => setStatus('idle'), 5000)
             } else {
                 throw new Error()
             }
@@ -79,10 +88,14 @@ function ContactFormContent() {
             />
             <button
                 type="submit"
-                disabled={status === 'sending'}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg transition disabled:opacity-50"
+                disabled={status === 'sending' || cooldown > 0} 
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-                {status === 'sending' ? 'Enviando...' : 'Enviar mensaje'}
+                {status === 'sending' 
+                    ? 'Enviando...' 
+                    : cooldown > 0 
+                    ? `Espera ${cooldown}s` 
+                    : 'Enviar mensaje'}
             </button>
             
             {status === 'sent' && (
